@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palouse Speed Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --volt: #C8F135;
+    --black: #0A0A0A;
+    --white: #F5F5F0;
+    --blue: #5B7FD4;
+    --purple: #8A5FC8;
+    --gray: #1A1A1A;
+    --mid: #2A2A2A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 64px;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,241,53,0.15);
+  }
+
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.2rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--volt);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245,245,240,0.7);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--volt); }
+
+  .nav-cta {
+    background: var(--volt);
+    color: var(--black) !important;
+    padding: 8px 20px;
+    font-weight: 700 !important;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  }
+
+  .nav-cta:hover { background: white; color: var(--black) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 40px 80px;
+    position: relative;
+    overflow: hidden;
+    background: var(--black);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 50%, rgba(91,127,212,0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(138,95,200,0.07) 0%, transparent 60%);
+    z-index: 0;
+  }
+
+  .hero-track-lines {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    overflow: hidden;
+    opacity: 0.06;
+  }
+
+  .hero-track-lines::before,
+  .hero-track-lines::after {
+    content: '';
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    height: 2px;
+    background: var(--volt);
+  }
+
+  .hero-track-lines::before { bottom: 60px; }
+  .hero-track-lines::after { bottom: 30px; }
+
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--volt);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.1s;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(4rem, 12vw, 10rem);
+    line-height: 0.92;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.2s;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-title span {
+    color: var(--volt);
+    display: block;
+  }
+
+  .hero-subtitle {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-style: italic;
+    font-size: clamp(1.8rem, 4vw, 3.5rem);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: linear-gradient(90deg, var(--blue), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.3s;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-body {
+    max-width: 520px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(245,245,240,0.75);
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.4s;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.5s;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--volt);
+    color: var(--black);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    text-decoration: none;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: white;
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    border: 1.5px solid rgba(200,241,53,0.4);
+    color: var(--volt);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    text-decoration: none;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(200,241,53,0.1);
+    border-color: var(--volt);
+  }
+
+  .hero-stats {
+    position: absolute;
+    right: 40px;
+    bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    opacity: 0;
+    animation: fadeLeft 0.6s ease forwards 0.6s;
+    z-index: 1;
+  }
+
+  .stat {
+    text-align: right;
+  }
+
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2.8rem;
+    line-height: 1;
+    color: var(--volt);
+  }
+
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,245,240,0.5);
+  }
+
+  /* ── TICKER ── */
+  .ticker {
+    background: var(--volt);
+    color: var(--black);
+    padding: 12px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .ticker-inner {
+    display: inline-block;
+    animation: ticker 20s linear infinite;
+  }
+
+  .ticker-inner span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-right: 60px;
+  }
+
+  .ticker-inner span::before {
+    content: '▶';
+    margin-right: 16px;
+    font-size: 0.6rem;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 100px 40px; }
+
+  .section-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--volt);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    text-transform: uppercase;
+    line-height: 0.95;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--volt);
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    background: var(--gray);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-text p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(245,245,240,0.75);
+    margin-bottom: 20px;
+  }
+
+  .about-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .feature:first-child { border-top: 1px solid rgba(255,255,255,0.08); }
+
+  .feature-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2.5rem;
+    line-height: 1;
+    color: var(--volt);
+    min-width: 56px;
+  }
+
+  .feature-content h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .feature-content p {
+    font-size: 0.9rem;
+    color: rgba(245,245,240,0.6);
+    line-height: 1.5;
+  }
+
+  /* ── SEASON ── */
+  .season { background: var(--black); }
+
+  .season-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+    background: rgba(200,241,53,0.1);
+    border: 1px solid rgba(200,241,53,0.1);
+  }
+
+  .season-card {
+    background: var(--black);
+    padding: 40px 32px;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .season-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--purple));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .season-card:hover::before { transform: scaleX(1); }
+  .season-card:hover { background: var(--gray); }
+
+  .season-card.featured::before { transform: scaleX(1); background: var(--volt); height: 4px; }
+  .season-card.featured { background: var(--gray); }
+
+  .season-badge {
+    display: inline-block;
+    background: var(--volt);
+    color: var(--black);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    margin-bottom: 20px;
+    clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+  }
+
+  .season-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .season-price sup {
+    font-size: 1.5rem;
+    vertical-align: super;
+  }
+
+  .season-price-note {
+    font-size: 0.85rem;
+    color: rgba(245,245,240,0.5);
+    margin-bottom: 28px;
+  }
+
+  .season-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+
+  .season-includes {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .season-includes li {
+    font-size: 0.9rem;
+    color: rgba(245,245,240,0.7);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .season-includes li::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    background: var(--volt);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    flex-shrink: 0;
+  }
+
+  /* ── SCHEDULE ── */
+  .schedule { background: var(--gray); }
+
+  .schedule-list {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .meet-row {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    align-items: center;
+    gap: 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: background 0.2s;
+  }
+
+  .meet-row:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
+
+  .meet-row:hover {
+    background: rgba(200,241,53,0.03);
+    padding-left: 12px;
+    padding-right: 12px;
+    margin: 0 -12px;
+    border-radius: 4px;
+  }
+
+  .meet-date {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--volt);
+  }
+
+  .meet-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 2px;
+  }
+
+  .meet-location {
+    font-size: 0.85rem;
+    color: rgba(245,245,240,0.5);
+  }
+
+  .meet-type {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
+    white-space: nowrap;
+  }
+
+  .type-open { background: rgba(91,127,212,0.2); color: var(--blue); }
+  .type-assoc { background: rgba(200,241,53,0.15); color: var(--volt); }
+  .type-invite { background: rgba(138,95,200,0.2); color: #b08ee8; }
+  .type-jo { background: var(--volt); color: var(--black); }
+  .type-regional { background: rgba(200,241,53,0.9); color: var(--black); }
+  .type-national { background: white; color: var(--black); }
+
+  /* ── PRACTICE ── */
+  .practice { background: var(--black); }
+
+  .practice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    margin-top: 60px;
+  }
+
+  .practice-days {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .day-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 24px;
+    background: var(--gray);
+    border-left: 3px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .day-row.active { border-left-color: var(--volt); }
+  .day-row.inactive { opacity: 0.35; }
+
+  .day-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+    min-width: 100px;
+  }
+
+  .day-time {
+    font-size: 0.9rem;
+    color: rgba(245,245,240,0.6);
+  }
+
+  .day-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--volt);
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .practice-info {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .info-block {
+    padding: 28px;
+    background: var(--gray);
+    border-top: 3px solid var(--volt);
+  }
+
+  .info-block h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--volt);
+    margin-bottom: 8px;
+  }
+
+  .info-block p {
+    font-size: 1rem;
+    color: var(--white);
+    line-height: 1.6;
+  }
+
+  /* ── PATHWAY ── */
+  .pathway { background: var(--gray); }
+
+  .pathway-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 60px;
+    max-width: 700px;
+  }
+
+  .pathway-step {
+    display: flex;
+    gap: 32px;
+    padding: 36px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+  }
+
+  .step-line {
+    position: absolute;
+    left: 19px;
+    top: 72px;
+    bottom: -1px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--volt), transparent);
+  }
+
+  .pathway-step:last-child .step-line { display: none; }
+
+  .step-num {
+    width: 40px;
+    height: 40px;
+    background: var(--volt);
+    color: var(--black);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+  }
+
+  .step-content h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .step-content .step-date {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--volt);
+    margin-bottom: 8px;
+  }
+
+  .step-content p {
+    font-size: 0.9rem;
+    color: rgba(245,245,240,0.6);
+    line-height: 1.6;
+  }
+
+  /* ── JOIN ── */
+  .join {
+    background: var(--volt);
+    text-align: center;
+    padding: 100px 40px;
+  }
+
+  .join .section-eyebrow { color: rgba(10,10,10,0.6); }
+
+  .join .section-title {
+    color: var(--black);
+  }
+
+  .join .section-title em { color: rgba(10,10,10,0.5); }
+
+  .join-body {
+    max-width: 520px;
+    margin: 0 auto 48px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: rgba(10,10,10,0.7);
+  }
+
+  .join-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-dark {
+    display: inline-block;
+    background: var(--black);
+    color: var(--volt);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    text-decoration: none;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .btn-dark:hover {
+    background: var(--gray);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline-dark {
+    display: inline-block;
+    border: 2px solid rgba(10,10,10,0.3);
+    color: var(--black);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    text-decoration: none;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: all 0.2s;
+  }
+
+  .btn-outline-dark:hover { background: rgba(10,10,10,0.1); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(200,241,53,0.1);
+    padding: 60px 40px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 60px;
+  }
+
+  .footer-brand .nav-logo {
+    font-size: 1.4rem;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .footer-brand p {
+    font-size: 0.9rem;
+    color: rgba(245,245,240,0.5);
+    line-height: 1.7;
+    max-width: 280px;
+  }
+
+  .footer-col h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--volt);
+    margin-bottom: 16px;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-col ul a {
+    font-size: 0.9rem;
+    color: rgba(245,245,240,0.6);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-col ul a:hover { color: var(--volt); }
+
+  .footer-bottom {
+    background: var(--black);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-bottom p {
+    font-size: 0.8rem;
+    color: rgba(245,245,240,0.3);
+  }
+
+  .usatf-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,245,240,0.3);
+    border: 1px solid rgba(245,245,240,0.15);
+    padding: 4px 10px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(24px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 20px 60px; }
+    .hero-stats { display: none; }
+    section { padding: 60px 20px; }
+    .about { grid-template-columns: 1fr; gap: 40px; }
+    .season-grid { grid-template-columns: 1fr; }
+    .practice-grid { grid-template-columns: 1fr; }
+    .meet-row { grid-template-columns: 1fr; gap: 8px; }
+    .meet-date { font-size: 0.75rem; }
+    footer { grid-template-columns: 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Palouse Speed Academy</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#season">Season</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#practice">Practice</a></li>
+    <li><a href="#pathway">Junior Olympics</a></li>
+    <li><a href="#join" class="nav-cta">Register</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-track-lines"></div>
+  <div class="hero-eyebrow">USATF Inland Northwest · Pullman, WA</div>
+  <h1 class="hero-title">
+    Palouse
+    <span>Speed</span>
+    Academy
+  </h1>
+  <div class="hero-subtitle">Train Smarter. Compete Harder.</div>
+  <p class="hero-body">
+    Professional track and field coaching for youth athletes on the Palouse. 
+    From your first sprint to the Junior Olympic National Championships — 
+    we build athletes who compete.
+  </p>
+  <div class="hero-actions">
+    <a href="#join" class="btn-primary">Join the Team</a>
+    <a href="#season" class="btn-secondary">2026 Season Info</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">4×</div>
+      <div class="stat-label">Weekly Practices</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">$150</div>
+      <div class="stat-label">Full Season</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">Jun 1</div>
+      <div class="stat-label">WSU Mooberry Track</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>2026 Summer Season Now Open</span>
+    <span>USATF Junior Olympic Pathway</span>
+    <span>4 Practices Per Week</span>
+    <span>$150 Full Season — Singlet Included</span>
+    <span>Youth Ages 6–18 + Open Athletes</span>
+    <span>WSU Mooberry Track Complex</span>
+    <span>Professional Coaching Staff</span>
+    <span>2026 Summer Season Now Open</span>
+    <span>USATF Junior Olympic Pathway</span>
+    <span>4 Practices Per Week</span>
+    <span>$150 Full Season — Singlet Included</span>
+    <span>Youth Ages 6–18 + Open Athletes</span>
+    <span>WSU Mooberry Track Complex</span>
+    <span>Professional Coaching Staff</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-text">
+    <div class="section-eyebrow">Who We Are</div>
+    <h2 class="section-title">Built for<br><em>Competitors</em></h2>
+    <p>Palouse Speed Academy is a USATF-certified track and field club serving the Palouse region in both Washington and Idaho. We train youth athletes from age 6 through high school, plus open and masters competitors.</p>
+    <p>Our coaching staff brings professional-level expertise to every session. We don't just run laps — we develop athletes who compete with precision, execute under pressure, and qualify for bigger stages.</p>
+    <p>Whether you're stepping onto a track for the first time or chasing a regional qualifying mark, PSA is your club.</p>
+  </div>
+  <div class="about-features">
+    <div class="feature">
+      <div class="feature-num">01</div>
+      <div class="feature-content">
+        <h3>Professional Coaching</h3>
+        <p>USTFCCA certified coaches and former Division I track athletes with degrees in Exercise Science and Education. Proven experience coaching at the youth, high school, and collegiate levels.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-num">02</div>
+      <div class="feature-content">
+        <h3>All Levels Welcome</h3>
+        <p>Ages 6 through adult. From developmental athletes to Junior Olympic qualifiers.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-num">03</div>
+      <div class="feature-content">
+        <h3>Competition Ready</h3>
+        <p>Full USATF Junior Olympics pathway — local meets, Association Championships, Regionals, and Nationals. Top 12 advance from Association to Regionals; top 5 advance to Nationals.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEASON -->
+<section class="season" id="season">
+  <div class="section-eyebrow">2026 Registration</div>
+  <h2 class="section-title">One Price.<br><em>All Season.</em></h2>
+  <div class="season-grid">
+    <div class="season-card">
+      <div class="season-name">Youth Athlete</div>
+      <div class="season-price"><sup>$</sup>150</div>
+      <div class="season-price-note">+ $35 USATF Youth Membership (separate)</div>
+      <ul class="season-includes">
+        <li>All practices Jun 1 – Jul 31</li>
+        <li>Club singlet included</li>
+        <li>Professional coaching every session</li>
+        <li>USATF club affiliation</li>
+        <li>Full USATF Junior Olympics pathway support</li>
+        <li>Meet fees not included (~$10–25/meet, all meets optional)</li>
+      </ul>
+      <a href="#join" class="btn-primary">Register Now</a>
+    </div>
+    <div class="season-card featured">
+      <div class="season-badge">Most Popular</div>
+      <div class="season-name">Open / Adult</div>
+      <div class="season-price"><sup>$</sup>150</div>
+      <div class="season-price-note">+ $55 USATF Adult Membership (separate)</div>
+      <ul class="season-includes">
+        <li>All practices Jun 1 – Jul 31</li>
+        <li>Club singlet included</li>
+        <li>Professional coaching every session</li>
+        <li>USATF club affiliation</li>
+        <li>Relay team eligibility</li>
+        <li>Meet fees not included (all meets optional)</li>
+      </ul>
+      <a href="#join" class="btn-primary">Register Now</a>
+    </div>
+    <div class="season-card">
+      <div class="season-name">What's Not Included</div>
+      <div class="season-price" style="font-size:2rem; color: rgba(245,245,240,0.4);">FYI</div>
+      <div class="season-price-note" style="margin-bottom: 28px;">Kept separate to keep the base fee low</div>
+      <ul class="season-includes">
+        <li>USATF individual membership ($35 youth / $55 adult)</li>
+        <li>Meet entry fees (~$10–25 per meet)</li>
+        <li>Travel to away meets</li>
+        <li>Regional / National travel costs</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="schedule" id="schedule">
+  <div class="section-eyebrow">2026 Competition Calendar</div>
+  <h2 class="section-title">Meet<br><em>Schedule</em></h2>
+  <div class="schedule-list">
+    <div class="meet-row">
+      <div class="meet-date">Jun 6</div>
+      <div>
+        <div class="meet-name">Moses Lake All-Comers</div>
+        <div class="meet-location">Moses Lake High School · Moses Lake, WA</div>
+      </div>
+      <div class="meet-type type-open">Tune-Up</div>
+    </div>
+    <div class="meet-row">
+      <div class="meet-date">Jun 13</div>
+      <div>
+        <div class="meet-name">USATF Inland NW Association Championship</div>
+        <div class="meet-location">West Valley High School · Spokane Valley, WA</div>
+      </div>
+      <div class="meet-type type-assoc">Official</div>
+    </div>
+    <div class="meet-row">
+      <div class="meet-date">Jun 20</div>
+      <div>
+        <div class="meet-name">Blaze Invitational</div>
+        <div class="meet-location">Coeur d'Alene High School · CDA, ID</div>
+      </div>
+      <div class="meet-type type-invite">Invitational</div>
+    </div>
+    <div class="meet-row">
+      <div class="meet-date">Jun 20–21</div>
+      <div>
+        <div class="meet-name">Tri-City Thunder Invitational</div>
+        <div class="meet-location">Southridge High School · Kennewick, WA</div>
+      </div>
+      <div class="meet-type type-invite">Invitational</div>
+    </div>
+    <div class="meet-row">
+      <div class="meet-date">Jun 26–27</div>
+      <div>
+        <div class="meet-name">USATF Inland NW JO Association Championship</div>
+        <div class="meet-location">Southridge High School · Kennewick, WA</div>
+      </div>
+      <div class="meet-type type-jo">JO Qualifier</div>
+    </div>
+    <div class="meet-row">
+      <div class="meet-date">Jul 8–12</div>
+      <div>
+        <div class="meet-name">USATF Region 13 JO Championship</div>
+        <div class="meet-location">Mt. Tahoma High School · Tacoma, WA</div>
+      </div>
+      <div class="meet-type type-regional">Regional</div>
+    </div>
+    <div class="meet-row">
+      <div class="meet-date">Jul 27–Aug 1</div>
+      <div>
+        <div class="meet-name">USATF National JO Track & Field Championship</div>
+        <div class="meet-location">Cerritos College · Norwalk, CA</div>
+      </div>
+      <div class="meet-type type-national">Nationals</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRACTICE -->
+<section class="practice" id="practice">
+  <div class="section-eyebrow">Training Schedule</div>
+  <h2 class="section-title">4 Days.<br><em>Every Week.</em></h2>
+  <div class="practice-grid">
+    <div class="practice-days">
+      <div class="day-row active">
+        <div class="day-name">Monday</div>
+        <div class="day-time">5:45 – 7:15 PM</div>
+        <div class="day-dot"></div>
+      </div>
+      <div class="day-row active">
+        <div class="day-name">Tuesday</div>
+        <div class="day-time">5:45 – 7:15 PM</div>
+        <div class="day-dot"></div>
+      </div>
+      <div class="day-row active">
+        <div class="day-name">Wednesday</div>
+        <div class="day-time">5:45 – 7:15 PM</div>
+        <div class="day-dot"></div>
+      </div>
+      <div class="day-row active">
+        <div class="day-name">Thursday</div>
+        <div class="day-time">5:45 – 7:15 PM</div>
+        <div class="day-dot"></div>
+      </div>
+      <div class="day-row inactive">
+        <div class="day-name">Friday</div>
+        <div class="day-time">Off</div>
+      </div>
+      <div class="day-row inactive">
+        <div class="day-name">Saturday</div>
+        <div class="day-time">Meet Days / Optional</div>
+      </div>
+      <div class="day-row inactive">
+        <div class="day-name">Sunday</div>
+        <div class="day-time">Off</div>
+      </div>
+    </div>
+    <div class="practice-info">
+      <div class="info-block">
+        <h3>Location</h3>
+        <p>WSU Mooberry Track & Field Complex<br>Washington State University<br>Pullman, WA 99163</p>
+      </div>
+      <div class="info-block">
+        <h3>Season Dates</h3>
+        <p>June 1 – July 31, 2026<br>Support through Regionals (Jul 12)<br>and Nationals (Aug 1) for qualifiers.<br><small style="color:rgba(245,245,240,0.4); font-size:0.8rem;">All meets are optional.</small></p>
+      </div>
+      <div class="info-block">
+        <h3>What to Bring</h3>
+        <p>Running shoes or spikes, water bottle, weather-appropriate clothing. Singlet provided upon registration.</p>
+      </div>
+      <div class="info-block">
+        <h3>Ages</h3>
+        <p>Youth ages 6–18 · Open 19–29 · Masters 30+<br>All levels welcome. No tryouts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PATHWAY -->
+<section class="pathway" id="pathway">
+  <div class="section-eyebrow">Junior Olympics Pathway</div>
+  <h2 class="section-title">Your Road<br><em>to Nationals</em></h2>
+  <div class="pathway-steps">
+    <div class="pathway-step">
+      <div class="step-line"></div>
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-date">June 6</div>
+        <h3>Moses Lake All-Comers</h3>
+        <p>Open tune-up meet. Get your first official marks on the board and shake off nerves before the qualifying season begins.</p>
+      </div>
+    </div>
+    <div class="pathway-step">
+      <div class="step-line"></div>
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-date">June 13</div>
+        <h3>Inland NW Association Championship</h3>
+        <p>Official USATF association meet. Post competitive marks, gain experience in a sanctioned environment before JO qualifying.</p>
+      </div>
+    </div>
+    <div class="pathway-step">
+      <div class="step-line"></div>
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-date">June 26–27</div>
+        <h3>Inland NW JO Association Championship</h3>
+        <p>The Junior Olympics qualifier. Top 12 finishers per event and age group advance to Region 13 Championships in Tacoma.</p>
+      </div>
+    </div>
+    <div class="pathway-step">
+      <div class="step-line"></div>
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <div class="step-date">July 8–12</div>
+        <h3>USATF Region 13 Championship — Tacoma</h3>
+        <p>Regional championship for WA, OR, ID, MT, AK, HI. Top 5 finishers per event advance to the National Junior Olympic Championship.</p>
+      </div>
+    </div>
+    <div class="pathway-step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <div class="step-date">July 27 – August 1</div>
+        <h3>USATF National JO Championship — Norwalk, CA</h3>
+        <p>The national stage. The ceiling of the Junior Olympic pathway. PSA supports all athletes who earn their spot here.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN -->
+<section class="join" id="join">
+  <div class="section-eyebrow">Registration Open</div>
+  <h2 class="section-title">Ready to<br><em>Run?</em></h2>
+  <p class="join-body">
+    Season begins June 1. Registration is open now. $150 covers the full season with singlet included — just bring your USATF membership and show up ready to work.
+  </p>
+  <div class="join-actions">
+    <a href="tel:2089930242" class="btn-dark">Call (208) 993-0242</a>
+    <a href="mailto:palousespeedacademy@gmail.com" class="btn-dark">Email Us</a>
+    <a href="https://usatf.sport80.com" target="_blank" class="btn-outline-dark">Get USATF Membership</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <span class="nav-logo">Palouse Speed Academy</span>
+    <p>USATF Inland Northwest certified track and field club serving the Palouse region in Washington and Idaho. Professional coaching for athletes of all levels.</p>
+    <p style="margin-top:16px; color: rgba(245,245,240,0.6); font-size:0.9rem;">
+      <a href="tel:2089930242" style="color:var(--volt); text-decoration:none;">(208) 993-0242</a><br>
+      <a href="mailto:palousespeedacademy@gmail.com" style="color:var(--volt); text-decoration:none;">palousespeedacademy@gmail.com</a>
+    </p>
+  </div>
+  <div class="footer-col">
+    <h4>Quick Links</h4>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#season">Season & Pricing</a></li>
+      <li><a href="#schedule">Meet Schedule</a></li>
+      <li><a href="#practice">Practice Info</a></li>
+      <li><a href="#pathway">Junior Olympics Pathway</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Resources</h4>
+    <ul>
+      <li><a href="https://inlandnw.usatf.org" target="_blank">USATF Inland NW</a></li>
+      <li><a href="https://www.usatf.org/home-normal/top-utility-nav-content/membership/individual-youth-membership" target="_blank">USATF Youth Membership</a></li>
+      <li><a href="https://www.usatf.org/home-normal/top-utility-nav-content/membership" target="_blank">USATF Adult Membership</a></li>
+      <li><a href="tel:2089930242">(208) 993-0242</a></li>
+      <li><a href="mailto:palousespeedacademy@gmail.com">palousespeedacademy@gmail.com</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© 2026 Palouse Speed Academy · Pullman, WA</p>
+  <div class="usatf-badge">USATF Inland Northwest Member Club</div>
+</div>
+
+</body>
+</html>
